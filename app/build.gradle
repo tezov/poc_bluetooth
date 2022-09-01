@@ -1,0 +1,172 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.kapt'
+}
+
+android {
+    compileSdk 32
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    defaultConfig {
+        applicationId "com.tezov.bluetooth"
+        minSdk 21
+        targetSdk 32
+        resConfigs 'en', 'fr'
+        versionCode 10000
+        versionName "1.00.00"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.2.0'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            shrinkResources true
+            minifyEnabled true
+            debuggable false
+        }
+        debug {
+            shrinkResources false
+            minifyEnabled false
+        }
+    }
+    sourceSets {
+        main {
+            def main_layouts = file('src/main/res/layouts').listFiles()
+            res {
+                srcDirs 'src/main/res', main_layouts
+            }
+            java {
+                srcDirs 'src/main/java','src/main/kotlin'
+                filter.exclude '**/*TODO*'
+            }
+        }
+        debug {
+            res {
+                srcDirs 'src/build_type/debug/res'
+            }
+            java {
+                srcDirs 'src/build_type/debug/java','src/build_type/debug/kotlin'
+            }
+        }
+        release {
+            res {
+                srcDirs 'src/build_type/release/res'
+            }
+            java {
+                srcDirs 'src/build_type/release/java','src/build_type/release/kotlin'
+            }
+        }
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+    }
+}
+
+dependencies {
+    //**********************
+    implementation 'org.bouncycastle:bcpkix-jdk15to18:1.69'
+    implementation 'com.google.zxing:core:3.4.1'
+    //*************************
+
+    debugImplementation "androidx.compose.ui:ui-tooling:1.2.1"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:1.2.1"
+
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation "androidx.core:core-ktx:1.8.0"
+    kapt "android.arch.lifecycle:compiler:1.1.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
+    implementation "androidx.appcompat:appcompat:1.5.0"
+    implementation "androidx.appcompat:appcompat-resources:1.5.0"
+    implementation "com.google.android.material:material:1.6.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    implementation "androidx.compose.ui:ui:1.2.1"
+//    implementation "androidx.compose.ui:ui-tooling-preview:1.2.0"
+    implementation "androidx.compose.runtime:runtime:1.2.1"
+    implementation "androidx.compose.material:material:1.2.1"
+    implementation "androidx.compose.foundation:foundation:1.2.1"
+    implementation "androidx.compose.animation:animation:1.2.1"
+    implementation "androidx.activity:activity-compose:1.5.1"
+    implementation "androidx.constraintlayout:constraintlayout-compose:1.0.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
+    implementation "androidx.compose.runtime:runtime-livedata:1.2.1"
+    implementation "androidx.navigation:navigation-compose:2.5.1"
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.26.0-alpha"
+//    implementation "androidx.compose.material:material-icons-core:1.1.1"
+//    implementation "androidx.compose.material:material-icons-extended:1.1.1"
+
+    implementation "com.google.dagger:dagger:${dagger_version}"
+    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
+    kapt "com.google.dagger:dagger-android-processor:${dagger_version}"
+
+    // google map
+    implementation "com.google.android.gms:play-services-maps:18.1.0"
+    implementation "com.google.maps.android:maps-compose:2.2.0"
+
+//    implementation "com.squareup.retrofit2:converter-scalars:2.1.0"
+//    implementation "com.google.code.gson:gson:2.9.0"
+//    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10"
+//    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+//    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
+//    implementation "com.github.bumptech.glide:glide:4.13.2"
+//    implementation("com.github.bumptech.glide:okhttp3-integration:4.13.2"){
+//        exclude group: "glide-parent"
+//    }
+//    kapt "com.github.bumptech.glide:compiler:4.13.2"
+
+    //unit test
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "com.google.dagger:dagger:${dagger_version}"
+    kaptTest "com.google.dagger:dagger-compiler:${dagger_version}"
+    kaptTest "com.google.dagger:dagger-android-processor:${dagger_version}"
+    testImplementation "androidx.test:core:1.4.0"
+    testImplementation "androidx.test:core-ktx:1.4.0"
+    testImplementation "com.google.truth:truth:1.1.3"
+//    testImplementation "org.mockito:mockito-core:3.9.0"
+//    testImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+//    testImplementation "io.mockk:mockk:1.12.3"
+
+    // android test
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
+    androidTestImplementation "com.google.dagger:dagger:${dagger_version}"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:${dagger_version}"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-compiler:${dagger_version}"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:${dagger_version}"
+    androidTestAnnotationProcessor "com.google.dagger:dagger-android-processor:${dagger_version}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.4.0"
+    androidTestImplementation "androidx.test.espresso:espresso-contrib:3.4.0"
+    androidTestImplementation "org.mockito:mockito-core:3.9.0"
+    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:3.2.0"
+//    androidTestImplementation "androidx.navigation:navigation-testing:2.5.0"
+//    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.1.1"
+}
