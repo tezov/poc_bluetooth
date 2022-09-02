@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">bluetooth</string>
+
+    <!--    top app bar-->
+    <string name="top_app_bar_peripheral">Peripheral</string>
+    <string name="top_app_bar_central">Central</string>
+    <string name="top_app_bar_info">Info</string>
+
+
+    <!--    bottom navigation-->
+    <string name="bottom_navigation_peripheral">Peripheral</string>
+    <string name="bottom_navigation_central">Central</string>
+    <string name="bottom_navigation_info">Info</string>
+
+
 </resources>
